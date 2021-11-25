@@ -7,9 +7,11 @@
     </div>
     <div class="col-12">
       <div>
-        <textarea name="lyrics" id="lyrics-box" cols="70" rows="10">
+        <textarea name="lyrics" id="lyrics-box" cols="70" rows="10" [(ngModel)]="lyrics" (keypress)="addNewLinesToLyrics($event)">
           Type the lyrics here
         </textarea>
+        <p>Typed lyrics:</p>
+        <p>{{lyrics}}</p>
       </div>
     </div>
   </div>

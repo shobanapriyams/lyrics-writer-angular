@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'lyrics-writer-angular';
+  lyrics = "";
+
+  addNewLinesToLyrics(e: any) {
+    const keyCode = e.code;
+    if (keyCode === "Enter") {
+      this.lyrics += "\n";
+    }
+  }
 }
