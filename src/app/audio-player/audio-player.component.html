@@ -1,0 +1,36 @@
+<div class="row mb-2">
+  <div class="col-10">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Paste the mp3 url here"
+      [(ngModel)]="mp3url"
+    />
+  </div>
+  <div class="col-2">
+    <button class="btn btn-primary w-100" (click)="loadSong()">
+      Load song
+    </button>
+  </div>
+</div>
+<div id="waveform" class="mx-auto border border-dark rounded"></div>
+<div class="row mt-2">
+  <div class="col-11 mx-auto mt-2 btn-group">
+    <button class="btn btn-primary me-1" (click)="wave.skipBackward()">
+      Rewind
+    </button>
+    <button class="btn btn-primary me-1" (click)="wave.stop()">Stop</button>
+    <button class="btn btn-primary me-1" (click)="wave.playPause()">
+      {{ playStatus ? "Pause" : "Play" }}
+    </button>
+    <button class="btn btn-primary me-1" (click)="wave.toggleMute()">
+      {{ muteStatus ? "Unmute" : "Mute" }}
+    </button>
+    <button class="btn btn-primary me-1" (click)="wave.skipForward()">
+      Forward
+    </button>
+  </div>
+  <div class="col-1 d-flex align-items-center" style="font-size: 1.1rem">
+    {{ currentTime }} : {{ totalDuration }}
+  </div>
+</div>
