@@ -14,35 +14,54 @@
             required
             [(ngModel)]="songTitle"
           />
+          <div class="alert alert-danger py-2 px-3" *ngIf="error.title">
+            {{ error.title }}
+          </div>
         </div>
-        <textarea
-          class="form-control my-2"
-          name="lyrics"
-          id="lyrics-box"
-          placeholder="Type the song lyrics here"
-          [(ngModel)]="songLyrics"
-          (keypress)="addNewLinesToLyrics($event)"
-          required
-        ></textarea>
         <div>
-          <button class="btn btn-primary" (click)="saveSongToStorage()">
+          <textarea
+            class="form-control my-2"
+            name="lyrics"
+            id="lyrics-box"
+            placeholder="Type the song lyrics here"
+            [(ngModel)]="songLyrics"
+            (keypress)="addNewLinesToLyrics($event)"
+            required
+          ></textarea>
+          <div class="alert alert-danger py-2 px-3" *ngIf="error.lyrics">
+            {{ error.lyrics }}
+          </div>
+        </div>
+        <div class="alert alert-success py-2 px-3" *ngIf="success.message">
+          {{ success.message }}
+        </div>
+        <div>
+          <button class="btn btn-primary me-2" (click)="saveSongToStorage()">
             Save Lyrics
           </button>
-          <button class="btn btn-danger" (click)="clearWriter()">
+          <button class="btn btn-danger ms-2" (click)="clearWriter()">
             Clear Lyrics
           </button>
         </div>
       </div>
     </div>
+
+    <hr class="mt-4 mb-2 text-center" />
+
     <div class="col-12 my-2">
-      <h2 class="">Songs store</h2>
+      <h2 class="fw-light">Songs store</h2>
       <div class="row" *ngIf="songStore.total > 0">
         <ng-container *ngFor="let songObj of songStore.songs | keyvalue">
           <div class="col-10">
             <p>{{ songObj.value.title }}</p>
           </div>
           <div class="col-2">
-            <button class="btn btn-primary me-1">View</button>
+            <button
+              class="btn btn-primary me-1"
+              (click)="editSongFromStorage(songObj.key)"
+            >
+              Edit
+            </button>
             <button
               class="btn btn-danger ms-1"
               (click)="deleteSongFromStorage(songObj.key)"
