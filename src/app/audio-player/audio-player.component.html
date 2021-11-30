@@ -1,36 +1,62 @@
-<div class="row mb-2">
-  <div class="col-10">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Paste the mp3 url here"
-      [(ngModel)]="mp3url"
-    />
-  </div>
-  <div class="col-2">
-    <button class="btn btn-primary w-100" (click)="loadSong()">
-      Load song
-    </button>
-  </div>
-</div>
+<p>Audio player goes here</p>
 <div id="waveform" class="mx-auto border border-dark rounded"></div>
 <div class="row mt-2">
-  <div class="col-11 mx-auto mt-2 btn-group">
+  <div class="col-10 mx-auto mt-2 btn-group">
     <button class="btn btn-primary me-1" (click)="wave.skipBackward()">
-      Rewind
+      <i class="bi bi-skip-backward"></i>
     </button>
-    <button class="btn btn-primary me-1" (click)="wave.stop()">Stop</button>
+    <button class="btn btn-primary me-1" (click)="wave.stop()">
+      <i class="bi bi-stop"></i>
+    </button>
     <button class="btn btn-primary me-1" (click)="wave.playPause()">
-      {{ playStatus ? "Pause" : "Play" }}
+      <i class="bi bi-pause" *ngIf="playStatus"></i>
+      <i class="bi bi-play" *ngIf="!playStatus"></i>
     </button>
     <button class="btn btn-primary me-1" (click)="wave.toggleMute()">
-      {{ muteStatus ? "Unmute" : "Mute" }}
+      <i class="bi bi-volume-mute" *ngIf="muteStatus"></i>
+      <i class="bi bi-volume-up" *ngIf="!muteStatus"></i>
     </button>
     <button class="btn btn-primary me-1" (click)="wave.skipForward()">
-      Forward
+      <i class="bi bi-skip-forward"></i>
     </button>
   </div>
-  <div class="col-1 d-flex align-items-center" style="font-size: 1.1rem">
-    {{ currentTime }} : {{ totalDuration }}
+  <div class="col-2 d-flex align-items-center" *ngIf="!muteStatus">
+    <div class="d-flex justify-content-center">
+      <span class="d-block me-2"><i class="bi bi-volume-up-fill"></i></span>
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.1"
+        class="d-block"
+        (change)="changeVolumeRange($event)"
+      />
+    </div>
   </div>
+</div>
+
+<!-- Playlist table -->
+<div class="my-2">
+  <h2>Playlist</h2>
+  <table class="table table-striped border my-2">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Song Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let song of playlist; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+          <div class="row">
+            <div class="col-11">{{ song.title }}</div>
+            <div class="col-1">
+              <i class="bi bi-play-fill" (click)="loadSong(i)"></i>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -1,6 +1,11 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit } from '@angular/core';
 
 import wavesurfer from 'wavesurfer.js';
+
+interface ITrack {
+  title: string;
+  link: string;
+}
 
 @Component({
   selector: 'app-audio-player',
@@ -8,11 +13,52 @@ import wavesurfer from 'wavesurfer.js';
 })
 export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
   wave: any;
-  mp3url = '';
   totalDuration = '0:0';
   currentTime = '0:0';
   playStatus = false;
   muteStatus = false;
+  playlist: ITrack[] = [
+    {
+      title: 'Sample 1',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+    {
+      title: 'Sample 2',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+    {
+      title: 'Sample 3',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+    {
+      title: 'Sample 4',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+    {
+      title: 'Sample 5',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+    {
+      title: 'Sample 6',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+    {
+      title: 'Sample 7',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+    {
+      title: 'Sample 8',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+    {
+      title: 'Sample 9',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+    {
+      title: 'Sample 10',
+      link: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+    },
+  ];
 
   ngAfterViewInit(): void {
     this.wave = wavesurfer.create({
@@ -21,9 +67,9 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
       progressColor: 'black',
     });
 
-    this.wave.load(
-      'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3'
-    );
+    // sample url - http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3
+
+    this.wave.load(this.playlist[0].link);
 
     this.wave.on('mute', () => {
       this.muteStatus = !this.muteStatus;
@@ -50,18 +96,6 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  loadSong(): void {
-    // sample url - http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3
-
-    this.wave.load(
-      'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3'
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.wave.destory();
-  }
-
   timeCalculator = function (value: number) {
     let second = Math.floor(value % 60);
     let minute = Math.floor((value / 60) % 60);
@@ -72,4 +106,17 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
 
     return minute + ':' + second;
   };
+
+  loadSong(songIndex: number): void {
+    this.wave.load(this.playlist[songIndex].link);
+  }
+
+  changeVolumeRange(e: Event) {
+    const volumeRangeInput = e.target as HTMLInputElement;
+    this.wave.setVolume(volumeRangeInput.value);
+  }
+
+  ngOnDestroy(): void {
+    this.wave.destory();
+  }
 }

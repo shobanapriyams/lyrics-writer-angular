@@ -112,6 +112,7 @@ export class AppComponent {
       this.songStore.total++;
       this.clearErrorMessages();
       this.success.message = 'Added song entry successfully';
+      this.editMode = false;
     }
 
     localStorage.setItem('songStore', JSON.stringify(this.songStore));
